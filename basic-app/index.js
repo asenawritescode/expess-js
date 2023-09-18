@@ -24,13 +24,13 @@ const generateId = () => {
 };
 
 // Health check endpoint
-app.get('/healthcheck', (req, res) => {
+app.get('/healthcheck', (_, res) => {
   res.send('Server is up and running');
 });
 
 
 // GET all users
-app.get('/users', (req, res) => {
+app.get('/users', (_, res) => {
   res.send(database);
 });
 
@@ -61,11 +61,23 @@ app.put('/', (req, res) => {
   res.send({ id });
 });
 
+// DELETE request by ID
+app.delete('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  const user = database[userId];
+  if (user) {
+    delete database[userId];
+  } else {
+    res.status(404).send('User not found');
+  }
+});
+
 // DELETE request
-app.delete('/', (req, res) => {
+app.delete('/', (_, res) => {
   database = {};
   res.send('Database cleared');
 });
+
 
 // PATCH request
 app.patch('/', (req, res) => {
