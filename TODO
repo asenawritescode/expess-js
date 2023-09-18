@@ -1,0 +1,16 @@
+Versions: 
+  ✔ Simple App: @done(23-09-18 07:40)
+  Basic App:
+    ☐ Response Codes
+    ☐ Logging with winston 
+
+  MVC App: 
+    ☐ Logging with winston
+    ☐ Promise on controllers
+    Urgent:
+      ☐ Write class to start the server
+      ☐ Write controller logic
+      ☐ Write middleware logic
+      ☐ Write auth logic & DB 
+
+Bugs ?:  
