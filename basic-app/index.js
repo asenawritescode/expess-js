@@ -15,12 +15,14 @@ app.use(express.urlencoded());
 // Simulated JSON-based database
 let database = {};
 
-// Helper function to generate a random ID
-// Refactored code using slice()
 const generateId = () => {
   const randomId = Math.random().toString(36);
   return randomId.slice(2, 11);
 };
+
+app.get('/', (_, res) => {
+  res.send('Hello World!')
+});
 
 // Health check endpoint
 app.get('/healthcheck', (_, res) => {
@@ -29,7 +31,7 @@ app.get('/healthcheck', (_, res) => {
 
 
 // GET all users
-app.get('/users', (_, res) => {
+app.get('/users/all', (_, res) => {
   res.send(database);
 });
 
@@ -45,19 +47,37 @@ app.get('/users/:id', (req, res) => {
 });
 
 // POST request
-app.post('/', (req, res) => {
+app.post('/users/new', (req, res) => {
   const id = generateId();
-  const { name } = req.body;
-  database[id] = name;
+  const { name, email, age } = req.body;
+  database[id] = {
+    name: name,
+    email: email,
+    age: age
+  };
   res.send({ id });
 });
 
 // PUT request
-app.put('/', (req, res) => {
-  const id = generateId();
-  const { name } = req.body;
-  database = { [id]: name };
-  res.send({ id });
+/**
+ * This updates the entire resource with the new data, all the data has to be present
+ */
+app.put('/users/:id', (req, res) => {
+  const { name, email, age } = req?.body;
+  // check if they all exist
+  if (!name || !email || !age) {
+    res.status(400).send('Missing data');
+    return
+  }
+  
+  const id = req.params.id;
+  
+  database[id] = {
+    name: name,
+    email: email,
+    age: age
+  };
+  res.send("User updated");
 });
 
 // DELETE request by ID
@@ -66,6 +86,7 @@ app.delete('/users/:id', (req, res) => {
   const user = database[userId];
   if (user) {
     delete database[userId];
+    res.send('User deleted !');
   } else {
     res.status(404).send('User not found');
   }
@@ -77,23 +98,34 @@ app.delete('/', (_, res) => {
   res.send('Database cleared');
 });
 
-
 // PATCH request
-app.patch('/', (req, res) => {
-  const { id, name } = req.body;
+/**
+ * This updates a particular resource, with the specified data
+ */
+app.patch('/users/:id', (req, res) => {
+  const id = req.params.id;
+  const { name, age, email } = req?.body;
   if (id in database) {
-      database[id] = name;
-      res.send('Item updated');
+    if (name) {
+      database[id].name = name;
+    }
+    if (email) {
+      database[id].email = email;
+    }
+    if (age) {
+      database[id].age = age;
+    } 
+    res.send('Item updated');
   } else {
-      res.send('ID does not exist in the database');
+    res.send('ID does not exist in the database');
   }
 });
 
 // Fallback route
-app.use((req, res) => {
+app.use((_, res) => {
   res.status(404).send('Route not found');
 });
 
 app.listen(PORT, () => {
-    console.log('Server is running on port 3000');
+  console.log('Server is running on port 3000');
 });

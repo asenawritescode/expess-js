@@ -38,13 +38,13 @@ node index.js
    - **Simulated JSON-based Database**: The API now includes a simulated JSON-based database stored in the `database` object. It stores user data using randomly generated IDs.
    - **New Routes**: Additional routes have been added to support CRUD operations (Create, Read, Update, Delete) on the user data in the database. The supported request types are:
      - **GET** `/healthcheck`: Returns a message indicating that the server is up and running.
-     - **GET** `/users`: Retrieves all users from the database.
+     - **GET** `/users/all`: Retrieves all users from the database.
      - **GET** `/users/:id`: Retrieves a specific user by ID from the database.
-     - **POST** `/`: Creates a new user and adds it to the database.
-     - **PUT** `/`: Creates a new user and replaces the entire database with only that user. [PUT VS PATCH](https://www.geeksforgeeks.org/difference-between-put-and-patch-request/)
+     - **POST** `/users/new`: Creates a new user and adds it to the database.
+     - **PUT** `/users/:id`: This updates the entire resource with the new data, all the data has to be present. [PUT VS PATCH](https://www.geeksforgeeks.org/difference-between-put-and-patch-request/)
      - **DELETE** `/users/:id`: Deletes a specific user by ID from the database.
      - **DELETE** `/`: Clears the entire database.
-     - **PATCH** `/`: Updates an existing user in the database.
+     - **PATCH** `/users/:id`: Updates an existing user data in the database.
 
 
 5. Feel free to explore the code and make modifications as needed. You can find the complete code for this tutorial in the `index.js` file.
