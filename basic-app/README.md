@@ -41,10 +41,11 @@ node index.js
      - **GET** `/users`: Retrieves all users from the database.
      - **GET** `/users/:id`: Retrieves a specific user by ID from the database.
      - **POST** `/`: Creates a new user and adds it to the database.
-     - **PUT** `/`: Creates a new user and replaces the entire database with only that user.
+     - **PUT** `/`: Creates a new user and replaces the entire database with only that user. [PUT VS PATCH](https://www.geeksforgeeks.org/difference-between-put-and-patch-request/)
      - **DELETE** `/users/:id`: Deletes a specific user by ID from the database.
      - **DELETE** `/`: Clears the entire database.
      - **PATCH** `/`: Updates an existing user in the database.
+
 
 5. Feel free to explore the code and make modifications as needed. You can find the complete code for this tutorial in the `index.js` file.
 
